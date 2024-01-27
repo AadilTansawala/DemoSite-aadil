@@ -17,7 +17,7 @@ const Home = ({ loggedInUser }) => {
           </div>
         </>
       ) : (
-        <h1 className='pt-8 text-4xl text-red-500 text-center font-bold'>
+        <h1 className='pt-8 text-4xl text-white text-center font-bold'>
           Please login / sign up first
         </h1>
       )}
