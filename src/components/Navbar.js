@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from "../image/logo.png";
+import Logo from '../image/logo.png';
+import { GiHamburgerMenu } from "react-icons/gi";
+import { MdOutlineClose } from "react-icons/md";
 
 const Navbar = ({ loggedInUser, handleLogout }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const handleLogoutClick = () => {
     handleLogout();
   };
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
-    <div className='flex flex-col lg:flex-row justify-between m-8 mb-0 p-8 bg-gradient-to-r from-orange-300 to-orange-400'>
+    <div className='flex flex-col md:flex-row justify-between m-8 max-md:m-0 mb-0 p-8 bg-gradient-to-r from-orange-300 to-orange-400'>
       <Link to="/">
         <div className="flex items-center mb-4 md:mb-0">
           <img className="h-8 mr-3 rounded-full" src={Logo} alt="Logo" />
@@ -16,17 +24,18 @@ const Navbar = ({ loggedInUser, handleLogout }) => {
         </div>
       </Link>
 
-      <h1 className='text-2xl text-neutral-300 font-mono mb-4 md:mb-0'>
-        {loggedInUser ? (
-          <span className='text-neutral-100 text-4xl font-bold pl-2'>
-            Welcome {loggedInUser.firstName}
-          </span>
-        ) : (
-          <span className='text-neutral-100 text-2xl font-bold pl-2'>Please login/signup</span>
-        )}
-      </h1>
+      <button
+        className="absolute top-8 right-16 md:hidden text-white w-5 text-4xl"
+        onClick={toggleMenu}
+      >
+        {menuOpen ? <MdOutlineClose /> : <GiHamburgerMenu />}
+      </button>
 
-      <ul className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-24 pt-1">
+      <ul
+        className={`${
+          menuOpen ? 'flex' : 'hidden'
+        } md:flex flex-col md:flex-row gap-x-16 space-y-4 md:space-y-0 md:space-x-24 pt-1`}
+      >
         <Link to="/">
           <li className='text-neutral-100'>Home</li>
         </Link>
@@ -45,6 +54,6 @@ const Navbar = ({ loggedInUser, handleLogout }) => {
       </ul>
     </div>
   );
-}
+};
 
 export default Navbar;
